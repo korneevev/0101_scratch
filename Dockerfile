@@ -1,8 +1,10 @@
 # Start by building the application.
-FROM golang:1.19-alpine as build
+FROM scratch as build
 
 WORKDIR /go/src/app
 COPY . .
+
+VOLUME /upload
 
 RUN go mod download
 RUN go build -o /go/bin/app.bin cmd/main.go
