@@ -17,5 +17,4 @@ COPY --from=build /etc_passwd /etc/passwd
 COPY --from=build /go/src/app/scratch .
 
 USER appuser
-CMD ["./scratch"]
 EXPOSE 9999
