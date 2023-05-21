@@ -6,9 +6,6 @@ COPY . .
 
 RUN go mod download
 RUN go build -o app cmd/main.go
-RUN ls
-RUN ls /go/src/app
-RUN ls /
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
@@ -18,7 +15,7 @@ VOLUME /upload
 COPY --from=0 /etc_passwd /etc/passwd
 
 WORKDIR /bin
-COPY --from=builder /app/app /app/app
+COPY --from=builder /go/src/app/app .
 
 USER appuser
 
