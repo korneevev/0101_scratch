@@ -23,6 +23,5 @@ jobs:
     - name: Build the scratch Docker image
       run: |
         DOCKER_BUILDKIT=0 docker build . --tag ghcr.io/korneevev/scratch:latest
-        docker run ghcr.io/korneevev/scratch:latest
         docker push ghcr.io/korneevev/scratch:latest
          
