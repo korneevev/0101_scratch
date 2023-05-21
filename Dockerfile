@@ -15,10 +15,10 @@ VOLUME /upload
 COPY --from=0 /etc_passwd /etc/passwd
 
 WORKDIR /bin
-COPY --from=builder /go/src/app/app .
+COPY --from=build /go/src/app/app .
 
 USER appuser
 
 EXPOSE 9999
 
-ENTRYPOINT ["/app/app"]
+ENTRYPOINT ["/bin/app"]
