@@ -7,28 +7,16 @@ COPY . .
 RUN go mod download
 RUN go build -o /go/bin/app.bin cmd/main.go
 
-ENV USER=appuser
-ENV UID=10001 
-
-RUN adduser \    
-    --disabled-password \    
-    --gecos "" \    
-    --home "/nonexistent" \    
-    --shell "/sbin/nologin" \    
-    --no-create-home \    
-    --uid "${UID}" \    
-    "${USER}"
+RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
 FROM scratch
-
 VOLUME /upload
 
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
+COPY --from=0 /etc_passwd /etc/passwd
 
 COPY --from=builder /go/bin/app.bin /go/bin/app.bin
 
-USER appuser:appuser
+USER appuser
 
 EXPOSE 9999
 
