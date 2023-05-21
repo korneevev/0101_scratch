@@ -16,8 +16,6 @@ WORKDIR /
 COPY --from=build /etc_passwd /etc/passwd
 COPY --from=build /go/src/app/scratch .
 
-
-EXPOSE 9999
-
 USER appuser
 CMD ["./scratch"]
+EXPOSE 9999
