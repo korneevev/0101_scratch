@@ -19,4 +19,4 @@ COPY --from=build /app/scratch /usr/local/bin/scratch
 EXPOSE 9999
 
 USER appuser
-CMD ["./scratch"]
+CMD ["./usr/local/bin/scratch"]
