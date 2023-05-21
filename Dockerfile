@@ -1,11 +1,11 @@
 # Start by building the application.
 FROM golang:1.19-alpine as build
 
-WORKDIR /go/src/app
+WORKDIR /build
 COPY . .
 
 RUN go mod download
-RUN go build -o /go/bin/app.bin cmd/main.go
+RUN go build -o /app/app cmd/main.go
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
@@ -14,10 +14,11 @@ VOLUME /upload
 
 COPY --from=0 /etc_passwd /etc/passwd
 
-COPY --from=builder /go/bin/app.bin /go/bin/app.bin
+WORKDIR /app
+COPY --from=builder /app/app /app/app
 
 USER appuser
 
 EXPOSE 9999
 
-ENTRYPOINT ["/go/bin/app"]
+ENTRYPOINT ["/app/app"]
