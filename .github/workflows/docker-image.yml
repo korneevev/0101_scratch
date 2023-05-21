@@ -7,13 +7,23 @@ on:
     branches: [ "main" ]
 
 jobs:
-  publish-scratch-image:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Login to GitHub Container Registry
+    - name: Build the scratch Docker image
+      run: |
+        DOCKER_BUILDKIT=0 docker build . --tag ghcr.io/korneevev/scratch:latest
+         
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+   - name: Login to GitHub Container Registry
       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
       with:
         registry: ghcr.io
@@ -21,7 +31,5 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build the scratch Docker image
-      run: |
-        DOCKER_BUILDKIT=0 docker build . --tag ghcr.io/korneevev/scratch:latest
-        docker push ghcr.io/korneevev/scratch:latest
-         
+      run: 
+        docker push ghcr.io/korneevev/scratch:latest        
