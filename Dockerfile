@@ -5,15 +5,16 @@ WORKDIR /go/src/app
 COPY . .
 
 RUN go mod download
-RUN go build -o /go/bin/scratch.bin cmd/main.go
+RUN CGO_ENABLED=0 go build -o /go/src/app/scratch cmd/main.go
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
 FROM scratch
 VOLUME /upload
 
+WORKDIR /
 COPY --from=build /etc_passwd /etc/passwd
-COPY --from=build /go/bin/scratch.bin /scratch
+COPY --from=build /go/src/app/scratch .
 
 
 EXPOSE 9999
