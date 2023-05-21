@@ -16,7 +16,6 @@ VOLUME /upload
 COPY --from=0 /etc_passwd /etc/passwd
 
 COPY --from=build /go/src/app/app .
-RUN ls
 
 USER appuser
 
