@@ -14,13 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
     - name: Login to registry
       with:
               registry: ghcr.io
               username: ${{github.actor}}
               password: ${{secrets.GITHUB_TOKEN}}
-        
+              
+    - uses: actions/checkout@v3        
     - name: Build the Docker image
       run: DOCKER_BUILDKIT=0 docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: docker push ghcr.io/<your-GitHub-username>/store:latest
