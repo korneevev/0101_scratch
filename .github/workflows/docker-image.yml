@@ -8,11 +8,21 @@ on:
 
 jobs:
 
-  build:
+  build & push:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Login to registry
+      with:
+              registry: ghcr.io
+              username: ${{github.actor}}
+              password: ${{secrets.GITHUB_TOKEN}}
+        
     - name: Build the Docker image
-      run: DOCKER_BUILDKIT=0 docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+      DOCKER_BUILDKIT=0 docker build . --file Dockerfile --tag app-image:$(date +%s)
+      docker push ghcr.io/korneevev/app-image:latest
+     
