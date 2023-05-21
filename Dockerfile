@@ -6,7 +6,6 @@ COPY . .
 
 RUN go mod download
 RUN go build -o scratch cmd/main.go
-RUN ls /go/src/app
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
@@ -15,11 +14,11 @@ VOLUME /upload
 
 COPY --from=0 /etc_passwd /etc/passwd
 
-WORKDIR /app
-COPY --from=build /go/src/app/scratch .
+WORKDIR /
+COPY --from=build /scratch /scratch
 
 USER appuser
 
 EXPOSE 9999
 
-ENTRYPOINT ["app/scratch"]
+ENTRYPOINT ["/scratch"]
