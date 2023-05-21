@@ -18,3 +18,4 @@ COPY --from=build /go/src/app/scratch .
 
 USER appuser
 EXPOSE 9999
+ENTRYPOINT ["./scratch"]
