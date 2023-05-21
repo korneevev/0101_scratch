@@ -1,6 +1,7 @@
 # Start by building the application.
 FROM golang:1.19-alpine as build
 
+WORKDIR /app
 COPY . .
 
 RUN go mod download
@@ -12,9 +13,8 @@ FROM scratch
 VOLUME /upload
 
 COPY --from=build /etc_passwd /etc/passwd
+COPY --from=build /app/scratch /usr/local/bin/scratch
 
-WORKDIR /
-COPY --from=build /go/scratch /usr/local/bin/scratch
 
 EXPOSE 9999
 
