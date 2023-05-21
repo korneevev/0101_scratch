@@ -5,7 +5,7 @@ WORKDIR /go/src/app
 COPY . .
 
 RUN go mod download
-RUN go build -o app cmd/main.go
+RUN go build -o scratch cmd/main.go
 RUN ls /go/src/app
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
@@ -15,10 +15,11 @@ VOLUME /upload
 
 COPY --from=0 /etc_passwd /etc/passwd
 
-COPY --from=build /go/src/app/app .
+WORKDIR /app
+COPY --from=build /go/src/app/scratch .
 
 USER appuser
 
 EXPOSE 9999
 
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["app/scratch"]
