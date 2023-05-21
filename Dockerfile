@@ -15,10 +15,9 @@ VOLUME /upload
 COPY --from=0 /etc_passwd /etc/passwd
 
 WORKDIR /
-COPY --from=build /go/src/app/scratch /scratch
-
-USER appuser
+COPY --from=build /go/src/app/scratch .
 
 EXPOSE 9999
 
-ENTRYPOINT ["/scratch"]
+USER appuser
+CMD ["./scratch"]
