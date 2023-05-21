@@ -15,7 +15,7 @@ VOLUME /upload
 COPY --from=0 /etc_passwd /etc/passwd
 
 WORKDIR /
-COPY --from=build /scratch /scratch
+COPY --from=build /app/scratch /scratch
 
 EXPOSE 9999
 
