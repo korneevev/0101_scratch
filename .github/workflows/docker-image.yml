@@ -22,7 +22,6 @@ jobs:
               password: ${{secrets.GITHUB_TOKEN}}
         
     - name: Build the Docker image
-      run: |
-      DOCKER_BUILDKIT=0 docker build . --file Dockerfile --tag app-image:$(date +%s)
-      docker push ghcr.io/korneevev/app-image:latest
+      run: DOCKER_BUILDKIT=0 docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker push ghcr.io/<your-GitHub-username>/store:latest
      
