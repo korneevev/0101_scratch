@@ -5,7 +5,7 @@ WORKDIR /go/src/app
 COPY . .
 
 RUN go mod download
-RUN CGO_ENABLED=0 go build -o /go/src/app/scratch cmd/main.go
+RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o /go/src/app/scratch cmd/main.go
 
 RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
 
