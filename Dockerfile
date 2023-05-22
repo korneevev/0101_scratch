@@ -19,7 +19,8 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-RUN mkdir /upload && chown ${USER}: /upload
+WORKDIR /
+RUN mkdir /upload && chown appuser: /upload
 RUN ls -lt
 
 
@@ -27,8 +28,8 @@ FROM scratch
 VOLUME /upload
 
 WORKDIR /
-COPY --from=build /etc_passwd /etc/passwd
-COPY --from=build /go/src/app/scratch .
+# COPY --from=build /etc_passwd /etc/passwd
+# COPY --from=build /go/src/app/scratch .
 
 USER appuser:appuser
 EXPOSE 9999
