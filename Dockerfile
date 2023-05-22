@@ -7,7 +7,21 @@ COPY . .
 RUN go mod download
 RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o /go/src/app/scratch cmd/main.go
 
-RUN echo "appuser:x:65534:65534:Appuser:/:" > /etc_passwd
+ENV USER=appuser
+ENV UID=10001
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+RUN mkdir /upload && chown ${USER}: /upload
+RUN ls -lt
+
 
 FROM scratch
 VOLUME /upload
@@ -16,6 +30,6 @@ WORKDIR /
 COPY --from=build /etc_passwd /etc/passwd
 COPY --from=build /go/src/app/scratch .
 
-USER appuser
+USER appuser:appuser
 EXPOSE 9999
 ENTRYPOINT ["./scratch"]
