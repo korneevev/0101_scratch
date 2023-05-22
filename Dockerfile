@@ -21,12 +21,15 @@ RUN adduser \
 
 WORKDIR /
 RUN mkdir /upload && chown appuser: /upload
+RUN ls -lt
 
 
 FROM scratch
 VOLUME /upload
 
 WORKDIR /
+COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /etc/group /etc/group
 COPY --from=build /go/src/app/scratch .
 
 USER appuser:appuser
