@@ -29,7 +29,7 @@ WORKDIR /
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
 COPY --from=build /go/src/app/scratch .
-COPY --from=build --chown=appuser:appuser /go/src/app/upload ./upload
+COPY --from=build --chown=appuser:appuser /go/src/app/upload uploads
 
 USER appuser:appuser
 EXPOSE 9999
