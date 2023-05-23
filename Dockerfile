@@ -23,7 +23,7 @@ WORKDIR /
 RUN ls -lt
 
 FROM scratch
-VOLUME /upload
+VOLUME /uploads
 
 WORKDIR /
 COPY --from=build /etc/passwd /etc/passwd
