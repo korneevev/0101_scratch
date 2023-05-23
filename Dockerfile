@@ -20,7 +20,6 @@ RUN adduser \
     "${USER}"
 
 WORKDIR /
-RUN ls -lt
 
 FROM scratch
 VOLUME /uploads
