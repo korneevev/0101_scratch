@@ -20,9 +20,7 @@ RUN adduser \
     "${USER}"
 
 WORKDIR /
-RUN mkdir /upload && chown appuser: /upload
 RUN ls -lt
-
 
 FROM scratch
 VOLUME /upload
@@ -31,6 +29,7 @@ WORKDIR /
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
 COPY --from=build /go/src/app/scratch .
+COPY --from=build --chown=appuser:appuser /go/src/app/upload .
 
 USER appuser:appuser
 EXPOSE 9999
